@@ -44,19 +44,21 @@
 
         const url_api = 'https://api.wheretheiss.at/v1/satellites/25544';
 
-        async function getISS(){
-            const response = await fetch(url_api);
-            const data = await response.json();
-
-            marker.setLatLng([data.latitude, data.longitude]);
-            mymap.setView([data.latitude, data.longitude]);
-            document.getElementById('lat').innerHTML = data.latitude;
-            document.getElementById('lon').innerHTML = data.longitude;
+        function getISS(){
+            fetch(url_api)
+            .then(res => res.json())
+            .then(data => {
+                marker.setLatLng([data.latitude, data.longitude]);
+                mymap.setView([data.latitude, data.longitude]);
+                document.getElementById('lat').innerHTML = data.latitude;
+                document.getElementById('lon').innerHTML = data.longitude;
+            })
+            .catch(err => console.log('Error: ' + err));
         }
 
         getISS();
 
-        // setInterval(getISS, 1000);
+        setInterval(getISS, 1000);
     </script>
     
 </body>
